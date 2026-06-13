@@ -10,7 +10,7 @@ export const ui = {
     'nav.apropos': 'À propos',
     'nav.cta': 'Planifier un appel',
     'signature': 'Penser la tech pour durer',
-    'pied.lieu': 'Québec, CA',
+    'pied.lieu': '',
   },
   en: {
     'nav.approche': 'Approach',
@@ -20,7 +20,7 @@ export const ui = {
     'nav.apropos': 'About',
     'nav.cta': 'Book a call',
     'signature': 'Building tech that lasts',
-    'pied.lieu': 'Quebec, CA',
+    'pied.lieu': '',
   },
 } as const;
 
