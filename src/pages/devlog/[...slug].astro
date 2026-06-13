@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const billets = await getCollection('devlog');
+  return billets.map((billet) => ({
+    params: { slug: billet.id },
+    props: { billet },
+  }));
+}
+
+const { billet } = Astro.props;
+const { Content } = await render(billet);
+---
+
+<Base
+  lang="fr"
+  titre={`${billet.data.title} — Devlog Arkonium`}
+  description={billet.data.description ?? billet.data.title}
+>
+  <article class="conteneur billet">
+    <p class="etiquette">
+      devlog/{billet.data.numero} &middot; {billet.data.tag} &middot;{' '}
+      {billet.data.date.toLocaleDateString('fr-CA')}
+    </p>
+    <h1>{billet.data.title}</h1>
+    <div class="contenu">
+      <Content />
+    </div>
+    <a href="/devlog/" class="retour">&larr; Tous les billets</a>
+  </article>
+</Base>
+
+<style>
+  .billet { max-width: 720px; padding-top: 64px; padding-bottom: 86px; }
+  .billet h1 { font-size: clamp(28px, 4.5vw, 38px); margin: 14px 0 28px; }
+  .contenu :global(p) { margin-bottom: 1.2em; }
+  .contenu :global(h2) { font-size: 24px; margin: 1.6em 0 0.6em; }
+  .contenu :global(em) { color: var(--taupe); }
+  .retour { display: inline-block; margin-top: 36px; font-weight: 500; }
+</style>

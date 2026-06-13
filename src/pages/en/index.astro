@@ -1,0 +1,218 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('devlog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+---
+
+<Base
+  lang="en"
+  titre="Arkonium — Building tech that lasts"
+  description="Training and mentoring for development teams in Quebec. A platform that ships faster, absorbs regulation, and keeps your talent."
+>
+  <section class="hero conteneur">
+    <p class="etiquette">Dev team training &amp; mentoring &middot; Quebec</p>
+    <h1>Building tech that lasts.</h1>
+    <p class="hero-sous">
+      We train and mentor your development teams — for a platform that ships
+      faster, absorbs regulation, and keeps your talent.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-plein">Book a call</a>
+      <a href="#offres" class="btn btn-contour">Discover the workshop</a>
+    </div>
+  </section>
+
+  <section id="approche" class="conteneur piliers">
+    <div class="carte">
+      <div class="barre"></div>
+      <h2>Ship faster, without breaking</h2>
+      <p>
+        A healthy codebase turns deployments from a chore into a non-event.
+        Sustainable velocity, not heroic sprints.
+      </p>
+    </div>
+    <div class="carte">
+      <div class="barre"></div>
+      <h2>Absorb regulation</h2>
+      <p>
+        Law 25 yesterday, something else tomorrow. Architecture built to last
+        absorbs the next law instead of suffering it.
+      </p>
+    </div>
+    <div class="carte">
+      <div class="barre"></div>
+      <h2>Training is retention</h2>
+      <p>
+        Your developers grow with you instead of leaving to grow elsewhere.
+        Training eligible under Quebec's 1% law.
+      </p>
+    </div>
+  </section>
+
+  <section class="cuisine">
+    <div class="conteneur cuisine-int">
+      <blockquote>
+        &ldquo;A dev team is a kitchen brigade. Talent isn't enough — you need
+        the discipline of the craft.&rdquo;
+      </blockquote>
+      <p class="cuisine-attribution">— the Arkonium approach, explained without a single line of code</p>
+    </div>
+  </section>
+
+  <section id="offres" class="conteneur offres">
+    <p class="etiquette centre">Three ways to work together</p>
+    <h2 class="offres-titre">Start small. The next step becomes obvious.</h2>
+    <div class="offres-grille">
+      <article class="carte offre offre-vedette">
+        <span class="badge">Start here</span>
+        <h3>The workshop</h3>
+        <p class="offre-meta">1 day &middot; team + decision-makers</p>
+        <p>
+          Live refactoring of a real legacy codebase — or yours, if an audit has
+          been done. Leave with a method, not a show.
+        </p>
+      </article>
+      <article class="carte offre">
+        <h3>The micro-audit</h3>
+        <p class="offre-meta">Your code &middot; quantified findings</p>
+        <p>
+          The gap between your codebase and what it could be, in black and white.
+          And the raw material for a surgical workshop on your stack.
+        </p>
+      </article>
+      <article class="carte offre">
+        <h3>The mentoring</h3>
+        <p class="offre-meta">Recurring &middot; inside the team</p>
+        <p>
+          An engineering culture that takes root for good: reviews, architecture,
+          practices — until you no longer need us.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="zone-graphite ia">
+    <div class="conteneur">
+      <p class="etiquette">The elephant in the room</p>
+      <h2>AI writes code faster than ever. Who's thinking about architecture?</h2>
+      <p class="ia-texte">
+        Without an engineering culture, generated code is technical debt at
+        industrial speed. We train your teams to direct AI — not to be driven by it.
+      </p>
+      <div class="devlog-grille">
+        {posts.map((post) => (
+          <a href={`/devlog/${post.id}/`} class="devlog-carte">
+            <p class="meta-mono">devlog/{post.data.numero} &middot; {post.data.tag}</p>
+            <h3>{post.data.title}</h3>
+            <span class="devlog-lien">Read more &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="apropos" class="conteneur apropos">
+    <div class="avatar" aria-hidden="true">AO</div>
+    <div>
+      <h2>Arno — founder</h2>
+      <p>
+        Years spent taking over platforms cracking under their own weight. The
+        conviction that this can be learned — and that it's better taught
+        through cooking than jargon.
+      </p>
+    </div>
+  </section>
+
+  <section id="contact" class="conteneur contact">
+    <h2>Let's talk about your platform.</h2>
+    <p>A 30-minute call, jargon-free and commitment-free.</p>
+    <a href="mailto:contact@arkonium.tech" class="btn btn-plein">Book a call</a>
+  </section>
+</Base>
+
+<style>
+  .hero { text-align: center; padding: 86px 24px 64px; }
+  .hero h1 { font-size: clamp(38px, 6vw, 56px); margin: 16px 0; }
+  .hero-sous { color: var(--texte-secondaire); max-width: 520px; margin: 0 auto 30px; }
+  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .piliers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    padding-bottom: 70px;
+  }
+  .piliers h2 { font-size: 21px; margin: 14px 0 10px; }
+  .piliers p { font-size: 15px; color: var(--texte-secondaire); }
+
+  .cuisine { background: var(--creme-fonce); padding: 64px 0; }
+  .cuisine-int { text-align: center; }
+  .cuisine blockquote {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.45;
+    max-width: 640px;
+    margin: 0 auto 14px;
+  }
+  .cuisine-attribution { font-family: var(--font-mono); font-size: 13px; color: var(--taupe); }
+
+  .offres { padding: 70px 24px; }
+  .centre { text-align: center; display: block; }
+  .offres-titre { text-align: center; font-size: clamp(26px, 4vw, 32px); margin: 10px 0 30px; }
+  .offres-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .offre h3 { font-size: 22px; margin: 26px 0 4px; }
+  .offre-vedette { border: 2px solid var(--cuivre); }
+  .offre-vedette h3 { margin-top: 14px; }
+  .badge {
+    background: var(--cuivre);
+    color: var(--creme);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 5px;
+  }
+  .offre-meta { font-family: var(--font-mono); font-size: 12px; color: var(--taupe); margin-bottom: 12px; }
+  .offre p:last-child { font-size: 15px; color: var(--texte-secondaire); }
+
+  .ia { padding: 70px 0; }
+  .ia h2 { font-size: clamp(24px, 3.5vw, 30px); margin: 14px 0 12px; max-width: 620px; }
+  .ia-texte { color: #A9AFB8; max-width: 540px; font-size: 15px; margin-bottom: 30px; }
+  .devlog-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .devlog-carte {
+    background: var(--graphite-carte);
+    border-radius: 10px;
+    padding: 20px 22px;
+    display: block;
+  }
+  .devlog-carte:hover { text-decoration: none; background: #2A3038; }
+  .devlog-carte h3 { color: var(--creme); font-size: 18px; margin: 8px 0 12px; }
+  .devlog-lien { font-size: 14px; font-weight: 500; color: var(--cuivre); }
+
+  .apropos { display: flex; gap: 22px; align-items: center; padding-top: 70px; padding-bottom: 70px; }
+  .avatar {
+    width: 76px; height: 76px; border-radius: 50%;
+    background: var(--cuivre); color: var(--creme);
+    font-family: var(--font-display); font-weight: 500; font-size: 24px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .apropos h2 { font-size: 21px; margin-bottom: 8px; }
+  .apropos p { font-size: 15px; color: var(--texte-secondaire); }
+
+  .contact { text-align: center; padding-bottom: 86px; }
+  .contact h2 { font-size: clamp(26px, 4vw, 32px); margin-bottom: 10px; }
+  .contact p { color: var(--texte-secondaire); margin-bottom: 24px; }
+</style>

@@ -1,0 +1,104 @@
+/* Arkonium — jetons de la charte (doc 08_Identite_visuelle) */
+:root {
+  --creme: #F5F1E8;
+  --creme-carte: #FFFDF9;
+  --creme-fonce: #EFE9DA;
+  --anthracite: #2B2B28;
+  --cuivre: #B0653A;
+  --graphite: #1E2228;
+  --graphite-carte: #23282F;
+  --acier: #6FA8C9;
+  --taupe: #8A8578;
+  --texte-secondaire: #5A564D;
+  --bordure: #E2DCCC;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Public Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  background: var(--creme);
+  color: var(--anthracite);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+a { color: var(--cuivre); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--cuivre);
+  outline-offset: 3px;
+}
+
+.conteneur { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+/* Étiquette mono (eyebrow) */
+.etiquette {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cuivre);
+}
+
+/* Barre signature cuivre */
+.barre { width: 28px; height: 3px; background: var(--cuivre); }
+
+/* Boutons */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 12px 22px;
+  border-radius: 7px;
+  border: 1px solid var(--cuivre);
+  cursor: pointer;
+}
+.btn-plein { background: var(--cuivre); color: var(--creme); }
+.btn-plein:hover { background: #9A5530; text-decoration: none; }
+.btn-contour { background: transparent; color: var(--cuivre); }
+.btn-contour:hover { background: rgba(176, 101, 58, 0.08); text-decoration: none; }
+
+/* Cartes claires */
+.carte {
+  background: var(--creme-carte);
+  border: 0.5px solid var(--bordure);
+  border-radius: 10px;
+  padding: 26px 24px;
+}
+
+/* Contexte technique : graphite + acier (règle cuivre/acier de la charte) */
+.zone-graphite { background: var(--graphite); color: var(--creme); }
+.zone-graphite .etiquette { color: var(--acier); }
+.zone-graphite .meta-mono { font-family: var(--font-mono); font-size: 13px; color: var(--acier); }
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+pre {
+  background: var(--graphite);
+  color: var(--acier);
+  border-left: 2px solid var(--cuivre);
+  padding: 16px 18px;
+  overflow-x: auto;
+  border-radius: 0 6px 6px 0;
+}

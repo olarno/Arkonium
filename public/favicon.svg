@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="3" y="3" width="58" height="58" rx="10" fill="#F5F1E8" stroke="#B0653A" stroke-width="3.5"/>
+  <text x="32" y="36" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="500" font-size="26" fill="#2B2B28">Ar</text>
+  <text x="32" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#B0653A">&#8734;</text>
+</svg>

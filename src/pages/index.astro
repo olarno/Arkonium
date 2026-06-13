@@ -1,0 +1,225 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const billets = (await getCollection('devlog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+---
+
+<Base
+  lang="fr"
+  titre="Arkonium — Penser la tech pour durer"
+  description="Formation et mentorat d'équipes de développement au Québec. Une plateforme qui livre plus vite, encaisse le réglementaire et retient vos talents."
+>
+  <!-- Hero -->
+  <section class="hero conteneur">
+    <p class="etiquette">Formation et mentorat d'équipes dev &middot; Québec</p>
+    <h1>Penser la tech pour durer.</h1>
+    <p class="hero-sous">
+      On forme et on mentore vos équipes de développement — pour une plateforme
+      qui livre plus vite, encaisse le réglementaire et retient vos talents.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-plein">Planifier un appel</a>
+      <a href="#offres" class="btn btn-contour">Découvrir l'atelier</a>
+    </div>
+  </section>
+
+  <!-- Trois piliers -->
+  <section id="approche" class="conteneur piliers">
+    <div class="carte">
+      <div class="barre"></div>
+      <h2>Livrer plus vite, sans casser</h2>
+      <p>
+        Une base saine, c'est des déploiements qui passent de la corvée au
+        non-événement. Vélocité durable, pas sprint héroïque.
+      </p>
+    </div>
+    <div class="carte">
+      <div class="barre"></div>
+      <h2>Encaisser le réglementaire</h2>
+      <p>
+        Loi 25 hier, autre chose demain. Une architecture pensée pour durer
+        absorbe la prochaine loi au lieu de la subir.
+      </p>
+    </div>
+    <div class="carte">
+      <div class="barre"></div>
+      <h2>Former, c'est retenir</h2>
+      <p>
+        Vos devs grandissent chez vous au lieu de partir grandir ailleurs.
+        Formation admissible à la loi du 1&nbsp;%.
+      </p>
+    </div>
+  </section>
+
+  <!-- Métaphore cuisine -->
+  <section class="cuisine">
+    <div class="conteneur cuisine-int">
+      <blockquote>
+        «&nbsp;Une équipe de dev, c'est une brigade de cuisine. Le talent ne
+        suffit pas — il faut la discipline du métier.&nbsp;»
+      </blockquote>
+      <p class="cuisine-attribution">— l'approche Arkonium, expliquée sans une ligne de code</p>
+    </div>
+  </section>
+
+  <!-- Offres -->
+  <section id="offres" class="conteneur offres">
+    <p class="etiquette centre">Trois façons de travailler ensemble</p>
+    <h2 class="offres-titre">Commencez petit. La suite devient évidente.</h2>
+    <div class="offres-grille">
+      <article class="carte offre offre-vedette">
+        <span class="badge">Commencez ici</span>
+        <h3>L'atelier</h3>
+        <p class="offre-meta">1 journée &middot; équipe + décideurs</p>
+        <p>
+          Refactoring en direct d'une vraie base legacy — ou de la vôtre si un
+          audit a été fait. Repartez avec une méthode, pas un show.
+        </p>
+      </article>
+      <article class="carte offre">
+        <h3>Le micro-audit</h3>
+        <p class="offre-meta">Votre code &middot; constats chiffrés</p>
+        <p>
+          L'écart entre votre base et ce qu'elle pourrait être, noir sur blanc.
+          Et la matière d'un atelier chirurgical sur votre stack.
+        </p>
+      </article>
+      <article class="carte offre">
+        <h3>Le mentorat</h3>
+        <p class="offre-meta">Récurrent &middot; au cœur de l'équipe</p>
+        <p>
+          La culture d'ingénierie qui s'installe pour de bon&nbsp;: revues,
+          architecture, pratiques — jusqu'à ce que vous n'ayez plus besoin de nous.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- IA + devlog -->
+  <section class="zone-graphite ia">
+    <div class="conteneur">
+      <p class="etiquette">L'éléphant dans la pièce</p>
+      <h2>L'IA écrit le code plus vite que jamais. Qui pense l'architecture&nbsp;?</h2>
+      <p class="ia-texte">
+        Sans culture d'ingénierie, le code généré, c'est de la dette technique à
+        vitesse industrielle. On forme vos équipes à diriger l'IA — pas à la subir.
+      </p>
+      <div class="devlog-grille">
+        {billets.map((billet) => (
+          <a href={`/devlog/${billet.id}/`} class="devlog-carte">
+            <p class="meta-mono">devlog/{billet.data.numero} &middot; {billet.data.tag}</p>
+            <h3>{billet.data.title}</h3>
+            <span class="devlog-lien">Lire la suite &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- À propos -->
+  <section id="apropos" class="conteneur apropos">
+    <div class="avatar" aria-hidden="true">AO</div>
+    <div>
+      <h2>Arno — fondateur</h2>
+      <p>
+        Des années à reprendre des plateformes qui craquaient sous leur propre
+        poids. La conviction que ça s'apprend — et que ça se transmet mieux en
+        cuisine qu'en jargon.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="conteneur contact">
+    <h2>Parlons de votre plateforme.</h2>
+    <p>Un appel de 30 minutes, sans jargon et sans engagement.</p>
+    <a href="mailto:contact@arkonium.tech" class="btn btn-plein">Planifier un appel</a>
+  </section>
+</Base>
+
+<style>
+  .hero { text-align: center; padding: 86px 24px 64px; }
+  .hero h1 { font-size: clamp(38px, 6vw, 56px); margin: 16px 0; }
+  .hero-sous { color: var(--texte-secondaire); max-width: 520px; margin: 0 auto 30px; }
+  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .piliers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    padding-bottom: 70px;
+  }
+  .piliers h2 { font-size: 21px; margin: 14px 0 10px; }
+  .piliers p { font-size: 15px; color: var(--texte-secondaire); }
+
+  .cuisine { background: var(--creme-fonce); padding: 64px 0; }
+  .cuisine-int { text-align: center; }
+  .cuisine blockquote {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.45;
+    max-width: 640px;
+    margin: 0 auto 14px;
+  }
+  .cuisine-attribution { font-family: var(--font-mono); font-size: 13px; color: var(--taupe); }
+
+  .offres { padding: 70px 24px; }
+  .centre { text-align: center; display: block; }
+  .offres-titre { text-align: center; font-size: clamp(26px, 4vw, 32px); margin: 10px 0 30px; }
+  .offres-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .offre h3 { font-size: 22px; margin: 26px 0 4px; }
+  .offre-vedette { border: 2px solid var(--cuivre); }
+  .offre-vedette h3 { margin-top: 14px; }
+  .badge {
+    background: var(--cuivre);
+    color: var(--creme);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 5px;
+  }
+  .offre-meta { font-family: var(--font-mono); font-size: 12px; color: var(--taupe); margin-bottom: 12px; }
+  .offre p:last-child { font-size: 15px; color: var(--texte-secondaire); }
+
+  .ia { padding: 70px 0; }
+  .ia h2 { font-size: clamp(24px, 3.5vw, 30px); margin: 14px 0 12px; max-width: 620px; }
+  .ia-texte { color: #A9AFB8; max-width: 540px; font-size: 15px; margin-bottom: 30px; }
+  .devlog-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .devlog-carte {
+    background: var(--graphite-carte);
+    border-radius: 10px;
+    padding: 20px 22px;
+    display: block;
+  }
+  .devlog-carte:hover { text-decoration: none; background: #2A3038; }
+  .devlog-carte h3 { color: var(--creme); font-size: 18px; margin: 8px 0 12px; }
+  .devlog-lien { font-size: 14px; font-weight: 500; color: var(--cuivre); }
+
+  .apropos { display: flex; gap: 22px; align-items: center; padding-top: 70px; padding-bottom: 70px; }
+  .avatar {
+    width: 76px; height: 76px; border-radius: 50%;
+    background: var(--cuivre); color: var(--creme);
+    font-family: var(--font-display); font-weight: 500; font-size: 24px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .apropos h2 { font-size: 21px; margin-bottom: 8px; }
+  .apropos p { font-size: 15px; color: var(--texte-secondaire); }
+
+  .contact { text-align: center; padding-bottom: 86px; }
+  .contact h2 { font-size: clamp(26px, 4vw, 32px); margin-bottom: 10px; }
+  .contact p { color: var(--texte-secondaire); margin-bottom: 24px; }
+</style>

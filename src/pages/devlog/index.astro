@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const billets = (await getCollection('devlog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base
+  lang="fr"
+  titre="Devlog — Arkonium"
+  description="La construction en public de la codebase Arkonium : refactoring, architecture et culture d'ingénierie, étape par étape."
+>
+  <section class="zone-graphite liste">
+    <div class="conteneur">
+      <p class="etiquette">Devlog</p>
+      <h1>La codebase, construite en public.</h1>
+      <p class="intro">
+        Un système de micro-prêt en Symfony, du legacy assumé au refactoring —
+        chaque étape documentée.
+      </p>
+      <div class="billets">
+        {billets.map((billet) => (
+          <a href={`/devlog/${billet.id}/`} class="billet">
+            <p class="meta-mono">
+              devlog/{billet.data.numero} &middot; {billet.data.tag} &middot;{' '}
+              {billet.data.date.toLocaleDateString('fr-CA')}
+            </p>
+            <h2>{billet.data.title}</h2>
+            {billet.data.description && <p class="desc">{billet.data.description}</p>}
+            <span class="lien">Lire la suite &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .liste { min-height: 70vh; padding: 70px 0; }
+  .liste h1 { font-size: clamp(30px, 5vw, 42px); margin: 14px 0 12px; }
+  .intro { color: #A9AFB8; max-width: 540px; margin-bottom: 36px; }
+  .billets { display: flex; flex-direction: column; gap: 14px; }
+  .billet {
+    background: var(--graphite-carte);
+    border-radius: 10px;
+    padding: 24px 26px;
+    display: block;
+  }
+  .billet:hover { text-decoration: none; background: #2A3038; }
+  .billet h2 { color: var(--creme); font-size: 22px; margin: 8px 0 8px; }
+  .desc { color: #A9AFB8; font-size: 15px; margin-bottom: 12px; }
+  .lien { font-size: 14px; font-weight: 500; color: var(--cuivre); }
+</style>

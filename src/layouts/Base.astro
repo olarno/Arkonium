@@ -1,0 +1,132 @@
+---
+import '../styles/global.css';
+import { t, type Langue } from '../i18n/ui';
+
+interface Props {
+  lang?: Langue;
+  titre: string;
+  description: string;
+}
+
+const { lang = 'fr', titre, description } = Astro.props;
+const tr = t(lang);
+const racine = lang === 'fr' ? '/' : '/en/';
+const autreLangue = lang === 'fr' ? { url: '/en/', label: 'EN' } : { url: '/', label: 'FR' };
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Public+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="conteneur barre-nav" aria-label="Navigation principale">
+        <a href={racine} class="marque" aria-label="Arkonium — accueil">
+          <span class="tuile" aria-hidden="true">
+            <span class="tuile-ar">Ar</span>
+            <span class="tuile-inf">&#8734;</span>
+          </span>
+          <span class="marque-nom">Arkonium</span>
+        </a>
+        <div class="nav-liens">
+          <a href={`${racine}#approche`}>{tr('nav.approche')}</a>
+          <a href={`${racine}#offres`}>{tr('nav.offres')}</a>
+          <a href="/devlog/">{tr('nav.devlog')}</a>
+          <a href={`${racine}#apropos`}>{tr('nav.apropos')}</a>
+          <a href={autreLangue.url} class="bascule-langue">{autreLangue.label}</a>
+          <a href={`${racine}#contact`} class="btn btn-plein btn-nav">{tr('nav.cta')}</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="pied">
+      <div class="conteneur pied-int">
+        <div class="marque marque-pied">
+          <span class="tuile tuile-sombre" aria-hidden="true">
+            <span class="tuile-ar">Ar</span>
+            <span class="tuile-inf">&#8734;</span>
+          </span>
+          <span class="pied-signature">{tr('signature')} &middot; {tr('pied.lieu')}</span>
+        </div>
+        <a href={`${racine}#contact`} class="btn btn-plein btn-nav">{tr('nav.cta')}</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .barre-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--bordure);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .marque { display: flex; align-items: center; gap: 10px; }
+  .marque:hover { text-decoration: none; }
+  .marque-nom {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--anthracite);
+  }
+  .tuile {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--cuivre);
+    border-radius: 6px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .tuile-ar { font-family: var(--font-display); font-weight: 500; font-size: 14px; color: var(--anthracite); }
+  .tuile-inf { font-family: var(--font-mono); font-size: 9px; color: var(--cuivre); }
+  .tuile-sombre .tuile-ar { color: var(--creme); }
+
+  .nav-liens { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .nav-liens a { font-size: 14px; color: var(--texte-secondaire); }
+  .nav-liens a:hover { color: var(--cuivre); text-decoration: none; }
+  .bascule-langue {
+    font-family: var(--font-mono);
+    font-size: 12px !important;
+    color: var(--taupe) !important;
+    border: 0.5px solid var(--bordure);
+    padding: 4px 9px;
+    border-radius: 5px;
+  }
+  .btn-nav { font-size: 13px; padding: 9px 16px; color: var(--creme) !important; }
+
+  .pied { background: var(--anthracite); margin-top: 0; }
+  .pied-int {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .marque-pied .tuile { width: 28px; height: 28px; }
+  .marque-pied .tuile-ar { font-size: 12px; }
+  .pied-signature { font-family: var(--font-mono); font-size: 12px; color: var(--taupe); }
+</style>
