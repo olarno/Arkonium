@@ -2,9 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-const billets = (await getCollection('devlog')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const billets = (await getCollection('devlog'))
+  .filter((b) => !b.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Base
@@ -15,11 +15,6 @@ const billets = (await getCollection('devlog')).sort(
   <section class="zone-graphite liste">
     <div class="conteneur">
       <p class="etiquette">Devlog</p>
-      <h1>La codebase, construite en public.</h1>
-      <p class="intro">
-        Un système de micro-prêt en Symfony, du legacy assumé au refactoring —
-        chaque étape documentée.
-      </p>
       <div class="billets">
         {billets.map((billet) => (
           <a href={`/devlog/${billet.id}/`} class="billet">
@@ -39,8 +34,6 @@ const billets = (await getCollection('devlog')).sort(
 
 <style>
   .liste { min-height: 70vh; padding: 70px 0; }
-  .liste h1 { font-size: clamp(30px, 5vw, 42px); margin: 14px 0 12px; }
-  .intro { color: #A9AFB8; max-width: 540px; margin-bottom: 36px; }
   .billets { display: flex; flex-direction: column; gap: 14px; }
   .billet {
     background: var(--graphite-carte);

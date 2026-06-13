@@ -9,6 +9,7 @@ const devlog = defineCollection({
     numero: z.string(),
     tag: z.string(),
     description: z.string().optional(),
+    draft: z.boolean().optional(),
   }),
 });
 

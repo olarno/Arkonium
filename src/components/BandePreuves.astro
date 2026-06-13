@@ -1,0 +1,177 @@
+---
+interface Props {
+  etiquette: string;
+  titre: string;
+  preuves: { chiffre: string; libelle: string; raison: string }[];
+}
+
+const { etiquette, titre, preuves } = Astro.props;
+---
+
+<section id="preuves" class="bande-preuves zone-graphite">
+  <div class="conteneur">
+    <p class="etiquette centre">{etiquette}</p>
+    <h2 class="bande-preuves-titre">{titre}</h2>
+    <div class="preuves-grille">
+      {preuves.map((p) => (
+        <button
+          type="button"
+          class="preuve-bouton"
+          aria-label={`${p.chiffre} ${p.libelle} — ${p.raison}`}
+        >
+          <div class="preuve-contenu">
+            <div class="preuve-recto">
+              <span class="preuve-chiffre">{p.chiffre}</span>
+              <span class="preuve-libelle">{p.libelle}</span>
+              <span class="preuve-indice">Pourquoi ?</span>
+            </div>
+            <div class="preuve-verso">
+              <p class="preuve-raison">{p.raison}</p>
+            </div>
+          </div>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.preuve-bouton').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('est-retournee');
+    });
+  });
+</script>
+
+<style>
+  .bande-preuves { padding: 70px 24px; }
+  .bande-preuves :global(.etiquette) { color: var(--acier); }
+  .centre { text-align: center; display: block; }
+  .bande-preuves-titre {
+    text-align: center;
+    font-size: clamp(26px, 4vw, 32px);
+    margin: 10px 0 30px;
+    color: var(--creme);
+  }
+
+  .preuves-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  /* Bouton-carte */
+  .preuve-bouton {
+    all: unset;
+    cursor: pointer;
+    perspective: 800px;
+    display: block;
+    height: 200px;
+    border-radius: 10px;
+  }
+  .preuve-bouton:focus-visible {
+    outline: 2px solid var(--cuivre);
+    outline-offset: 3px;
+  }
+
+  /* Conteneur interne (flip) */
+  .preuve-contenu {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+  }
+
+  /* Declencheurs du flip */
+  .preuve-bouton:hover .preuve-contenu,
+  .preuve-bouton:focus-visible .preuve-contenu,
+  .preuve-bouton.est-retournee .preuve-contenu {
+    transform: rotateY(180deg);
+  }
+
+  /* Faces communes */
+  .preuve-recto,
+  .preuve-verso {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 26px 24px;
+  }
+
+  /* Recto */
+  .preuve-recto {
+    background: var(--graphite-carte);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+  }
+  .preuve-chiffre {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--cuivre);
+  }
+  .preuve-libelle {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--acier);
+    margin-top: 8px;
+  }
+  .preuve-indice {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--cuivre);
+    margin-top: 14px;
+    opacity: 0.7;
+  }
+
+  /* Verso */
+  .preuve-verso {
+    background: var(--graphite);
+    border-left: 3px solid var(--cuivre);
+    transform: rotateY(180deg);
+  }
+  .preuve-raison {
+    color: var(--creme);
+    font-size: 15px;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  /* Reduced motion : fondu au lieu de rotation */
+  @media (prefers-reduced-motion: reduce) {
+    .preuve-contenu {
+      transition: none;
+    }
+    .preuve-recto {
+      transition: opacity 0.01s;
+    }
+    .preuve-verso {
+      transform: none;
+      opacity: 0;
+      transition: opacity 0.01s;
+    }
+
+    .preuve-bouton:hover .preuve-recto,
+    .preuve-bouton:focus-visible .preuve-recto,
+    .preuve-bouton.est-retournee .preuve-recto {
+      opacity: 0;
+    }
+    .preuve-bouton:hover .preuve-verso,
+    .preuve-bouton:focus-visible .preuve-verso,
+    .preuve-bouton.est-retournee .preuve-verso {
+      opacity: 1;
+    }
+
+    .preuve-bouton:hover .preuve-contenu,
+    .preuve-bouton:focus-visible .preuve-contenu,
+    .preuve-bouton.est-retournee .preuve-contenu {
+      transform: none;
+    }
+  }
+</style>

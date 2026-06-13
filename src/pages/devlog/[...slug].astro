@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const billets = await getCollection('devlog');
+  const billets = (await getCollection('devlog')).filter((b) => !b.data.draft);
   return billets.map((billet) => ({
     params: { slug: billet.id },
     props: { billet },

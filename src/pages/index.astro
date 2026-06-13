@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import BandePreuves from '../components/BandePreuves.astro';
 import { getCollection } from 'astro:content';
 
 const billets = (await getCollection('devlog'))
+  .filter((b) => !b.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 2);
 ---
@@ -17,7 +19,7 @@ const billets = (await getCollection('devlog'))
     <p class="etiquette">Formation et mentorat d'équipes dev &middot; Québec</p>
     <h1>Penser la tech pour durer.</h1>
     <p class="hero-sous">
-      On forme et on mentore vos équipes de développement — pour une plateforme
+      On forme et on mentore vos équipes de développement pour une plateforme
       qui livre plus vite, encaisse le réglementaire et retient vos talents.
     </p>
     <div class="hero-actions">
@@ -46,10 +48,11 @@ const billets = (await getCollection('devlog'))
     </div>
     <div class="carte">
       <div class="barre"></div>
-      <h2>Former, c'est retenir</h2>
+      <h2>Transmettre, pas créer de dépendance</h2>
       <p>
-        Vos devs grandissent chez vous au lieu de partir grandir ailleurs.
-        Formation admissible à la loi du 1&nbsp;%.
+        On installe une culture d'ingénierie qui reste après nous. La tech est
+        faite pour durer peu importe qui est dans l'équipe demain, le contrôle
+        reste chez vous.
       </p>
     </div>
   </section>
@@ -59,11 +62,22 @@ const billets = (await getCollection('devlog'))
     <div class="conteneur cuisine-int">
       <blockquote>
         «&nbsp;Une équipe de dev, c'est une brigade de cuisine. Le talent ne
-        suffit pas — il faut la discipline du métier.&nbsp;»
+        suffit pas, il faut la discipline du métier.&nbsp;»
       </blockquote>
-      <p class="cuisine-attribution">— l'approche Arkonium, expliquée sans une ligne de code</p>
+      <p class="cuisine-attribution">L'approche Arkonium, expliquée sans une ligne de code</p>
     </div>
   </section>
+
+  <!-- Bande de preuves -->
+  <BandePreuves
+    etiquette="Preuves"
+    titre="Des résultats, pas des promesses."
+    preuves={[
+      { chiffre: "÷3", libelle: "temps de correction", raison: "Moins de dette → moins de temps perdu à chercher, comprendre, contourner." },
+      { chiffre: "1%", libelle: "de régression", raison: "Tests ciblés + revues systématiques = filet de sécurité réel." },
+      { chiffre: "30min", libelle: "d'onboarding code", raison: "Code lisible + conventions partagées = autonomie immédiate." },
+    ]}
+  />
 
   <!-- Offres -->
   <section id="offres" class="conteneur offres">
@@ -75,7 +89,7 @@ const billets = (await getCollection('devlog'))
         <h3>L'atelier</h3>
         <p class="offre-meta">1 journée &middot; équipe + décideurs</p>
         <p>
-          Refactoring en direct d'une vraie base legacy — ou de la vôtre si un
+          Refactoring en direct d'une vraie base legacy, ou de la vôtre si un
           audit a été fait. Repartez avec une méthode, pas un show.
         </p>
       </article>
@@ -92,7 +106,7 @@ const billets = (await getCollection('devlog'))
         <p class="offre-meta">Récurrent &middot; au cœur de l'équipe</p>
         <p>
           La culture d'ingénierie qui s'installe pour de bon&nbsp;: revues,
-          architecture, pratiques — jusqu'à ce que vous n'ayez plus besoin de nous.
+          architecture, pratiques, jusqu'à ce que vous n'ayez plus besoin de nous.
         </p>
       </article>
     </div>
@@ -105,7 +119,7 @@ const billets = (await getCollection('devlog'))
       <h2>L'IA écrit le code plus vite que jamais. Qui pense l'architecture&nbsp;?</h2>
       <p class="ia-texte">
         Sans culture d'ingénierie, le code généré, c'est de la dette technique à
-        vitesse industrielle. On forme vos équipes à diriger l'IA — pas à la subir.
+        vitesse industrielle. On forme vos équipes à diriger l'IA, pas à la subir.
       </p>
       <div class="devlog-grille">
         {billets.map((billet) => (
@@ -121,12 +135,12 @@ const billets = (await getCollection('devlog'))
 
   <!-- À propos -->
   <section id="apropos" class="conteneur apropos">
-    <div class="avatar" aria-hidden="true">AO</div>
+    <img src="/profil_pic.jpeg" alt="Arnaud Oltra" class="avatar" />
     <div>
-      <h2>Arno — fondateur</h2>
+      <h2>Arnaud, fondateur</h2>
       <p>
         Des années à reprendre des plateformes qui craquaient sous leur propre
-        poids. La conviction que ça s'apprend — et que ça se transmet mieux en
+        poids. La conviction que ça s'apprend, et que ça se transmet mieux en
         cuisine qu'en jargon.
       </p>
     </div>
@@ -136,7 +150,7 @@ const billets = (await getCollection('devlog'))
   <section id="contact" class="conteneur contact">
     <h2>Parlons de votre plateforme.</h2>
     <p>Un appel de 30 minutes, sans jargon et sans engagement.</p>
-    <a href="mailto:contact@arkonium.tech" class="btn btn-plein">Planifier un appel</a>
+    <a href="https://cal.com/arnaud-oltra-7js2wv/15min" class="btn btn-plein">Planifier un appel</a>
   </section>
 </Base>
 
@@ -212,9 +226,7 @@ const billets = (await getCollection('devlog'))
   .apropos { display: flex; gap: 22px; align-items: center; padding-top: 70px; padding-bottom: 70px; }
   .avatar {
     width: 76px; height: 76px; border-radius: 50%;
-    background: var(--cuivre); color: var(--creme);
-    font-family: var(--font-display); font-weight: 500; font-size: 24px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    object-fit: cover; flex-shrink: 0;
   }
   .apropos h2 { font-size: 21px; margin-bottom: 8px; }
   .apropos p { font-size: 15px; color: var(--texte-secondaire); }
