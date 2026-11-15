@@ -1,0 +1,146 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t } from '../../i18n/ui';
+
+const tr = t('en');
+---
+
+<Base lang="en" titre={tr('slides.titre')} description={tr('slides.description')} noindex={true}>
+  <!-- Profile -->
+  <section class="slides-profil conteneur">
+    <img src="/profil_pic.jpeg" alt="Arnaud Oltra" class="slides-avatar" />
+    <h1>Arnaud Oltra</h1>
+    <p class="etiquette">{tr('slides.role')}</p>
+    <p class="slides-pitch">{tr('slides.pitch')}</p>
+  </section>
+
+  <!-- Links -->
+  <section class="slides-liens conteneur">
+    <h2>{tr('slides.liens')}</h2>
+    <div class="slides-grille">
+      <a href="https://www.linkedin.com/in/arnaud-oltra/" class="carte slides-carte" target="_blank" rel="noopener">
+        <span class="slides-icone">in</span>
+        <span>{tr('slides.linkedin')}</span>
+      </a>
+      <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7017341107411787776" class="carte slides-carte" target="_blank" rel="noopener">
+        <span class="slides-icone">&#9993;</span>
+        <span>{tr('slides.newsletter')}</span>
+      </a>
+      <a href="https://cal.com/arnaud-oltra-7js2wv/15min" class="carte slides-carte" target="_blank" rel="noopener">
+        <span class="slides-icone">&#9742;</span>
+        <span>{tr('slides.appel')}</span>
+      </a>
+      <a href="https://github.com/olarno" class="carte slides-carte" target="_blank" rel="noopener">
+        <span class="slides-icone">&lt;/&gt;</span>
+        <span>{tr('slides.github')}</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Talks -->
+  <section class="slides-conferences conteneur">
+    <h2>{tr('slides.conferences')}</h2>
+    <div class="slides-conf-liste">
+      <div class="carte slides-conf">
+        <p class="etiquette">{tr('slides.conf1.date')}</p>
+        <h3>{tr('slides.conf1.nom')}</h3>
+        <p class="slides-talk">{tr('slides.conf1.talk')}</p>
+      </div>
+      <div class="carte slides-conf">
+        <p class="etiquette">{tr('slides.conf2.date')}</p>
+        <h3>{tr('slides.conf2.nom')}</h3>
+        <p class="slides-talk">{tr('slides.conf2.talk')}</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .slides-profil {
+    text-align: center;
+    padding: 64px 24px 40px;
+  }
+  .slides-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+  }
+  .slides-profil h1 {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+  .slides-profil .etiquette {
+    margin-bottom: 16px;
+  }
+  .slides-pitch {
+    color: var(--texte-secondaire);
+    max-width: 480px;
+    margin: 0 auto;
+    font-size: 16px;
+  }
+
+  .slides-liens {
+    padding-bottom: 48px;
+  }
+  .slides-liens h2 {
+    font-size: 22px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .slides-grille {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .slides-carte {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--anthracite);
+    transition: border-color 150ms ease;
+  }
+  .slides-carte:hover {
+    border-color: var(--cuivre);
+    text-decoration: none;
+  }
+  .slides-icone {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--cuivre);
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .slides-conferences {
+    padding-bottom: 80px;
+  }
+  .slides-conferences h2 {
+    font-size: 22px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .slides-conf-liste {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  .slides-conf h3 {
+    font-size: 19px;
+    margin: 8px 0 6px;
+  }
+  .slides-talk {
+    font-size: 15px;
+    color: var(--texte-secondaire);
+    font-style: italic;
+  }
+</style>
