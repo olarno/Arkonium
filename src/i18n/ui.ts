@@ -28,6 +28,7 @@ export const ui = {
     'slides.conf2.nom': 'Dev/mtl',
     'slides.conf2.date': 'Novembre 2026',
     'slides.conf2.talk': 'De la mise en place au coup de feu',
+    'slides.certif': 'Symfony Certified Developer',
   },
   en: {
     'nav.approche': 'Approach',
@@ -55,6 +56,7 @@ export const ui = {
     'slides.conf2.nom': 'Dev/mtl',
     'slides.conf2.date': 'November 2026',
     'slides.conf2.talk': 'De la mise en place au coup de feu',
+    'slides.certif': 'Symfony Certified Developer',
   },
 } as const;
 

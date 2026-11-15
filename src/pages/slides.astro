@@ -11,6 +11,7 @@ const tr = t('fr');
     <img src="/profil_pic.jpeg" alt="Arnaud Oltra" class="slides-avatar" />
     <h1>Arnaud Oltra</h1>
     <p class="etiquette">{tr('slides.role')}</p>
+    <p class="slides-certif">{tr('slides.certif')}</p>
     <p class="slides-pitch">{tr('slides.pitch')}</p>
   </section>
 
@@ -72,6 +73,16 @@ const tr = t('fr');
     margin-bottom: 6px;
   }
   .slides-profil .etiquette {
+    margin-bottom: 8px;
+  }
+  .slides-certif {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--cuivre);
+    display: inline-block;
+    border: 1px solid var(--cuivre);
+    border-radius: 20px;
+    padding: 4px 14px;
     margin-bottom: 16px;
   }
   .slides-pitch {

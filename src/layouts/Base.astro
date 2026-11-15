@@ -44,7 +44,12 @@ const autreLangue = lang === 'fr'
           </span>
           <span class="marque-nom">Arkonium</span>
         </a>
-        <div class="nav-liens">
+        <button class="burger" aria-expanded="false" aria-controls="nav-liens" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div id="nav-liens" class="nav-liens">
           <a href={`${racine}#approche`}>{tr('nav.approche')}</a>
           <a href={`${racine}#preuves`}>{tr('nav.preuves')}</a>
           <a href={`${racine}#offres`}>{tr('nav.offres')}</a>
@@ -136,4 +141,79 @@ const autreLangue = lang === 'fr'
   .marque-pied .tuile { width: 28px; height: 28px; }
   .marque-pied .tuile-ar { font-size: 12px; }
   .pied-signature { font-family: var(--font-mono); font-size: 12px; color: var(--taupe); }
+
+  /* Burger */
+  .burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--anthracite);
+    border-radius: 1px;
+    transition: transform 250ms ease, opacity 250ms ease;
+    transform-origin: center;
+  }
+  .burger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .burger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @media (max-width: 768px) {
+    .barre-nav {
+      flex-wrap: nowrap;
+    }
+    .burger {
+      display: flex;
+    }
+    .nav-liens {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      gap: 8px;
+      padding-top: 16px;
+    }
+    .nav-liens.ouvert {
+      display: flex;
+    }
+    .nav-liens a {
+      padding: 8px 0;
+    }
+    .btn-nav {
+      text-align: center;
+      margin-top: 8px;
+    }
+  }
 </style>
+
+<script>
+  const burger = document.querySelector('.burger');
+  const nav = document.querySelector('#nav-liens');
+  if (burger && nav) {
+    burger.addEventListener('click', () => {
+      const ouvert = nav.classList.toggle('ouvert');
+      burger.setAttribute('aria-expanded', String(ouvert));
+    });
+    nav.querySelectorAll('a').forEach((lien) => {
+      lien.addEventListener('click', () => {
+        nav.classList.remove('ouvert');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
