@@ -12,7 +12,10 @@ interface Props {
 const { lang = 'fr', titre, description, noindex = false } = Astro.props;
 const tr = t(lang);
 const racine = lang === 'fr' ? '/' : '/en/';
-const autreLangue = lang === 'fr' ? { url: '/en/', label: 'EN' } : { url: '/', label: 'FR' };
+const chemin = Astro.url.pathname;
+const autreLangue = lang === 'fr'
+  ? { url: `/en${chemin}`, label: 'EN' }
+  : { url: chemin.replace(/^\/en/, '') || '/', label: 'FR' };
 ---
 
 <!doctype html>
